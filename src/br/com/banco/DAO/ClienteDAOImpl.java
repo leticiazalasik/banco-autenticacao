@@ -161,13 +161,13 @@ public class ClienteDAOImpl implements GenericDAO{
 	}
 
 	@Override
-	public void excluir (String nome) {
+	public void excluir (int id) {
 		PreparedStatement stmt = null; 
-		String sql = "DELETE FROM cliente WHERE nome=?"; 
+		String sql = "DELETE FROM cliente WHERE id=?"; 
 		
 		try { 
 			stmt=conn.prepareStatement(sql);
-			stmt.setString(1, nome);
+			stmt.setInt(1, id);
 			stmt.executeUpdate();
 		} catch (SQLException ex) { 
 			System.out.println("Problemas na DAO ao excluir cliente.");
@@ -216,7 +216,7 @@ public class ClienteDAOImpl implements GenericDAO{
 	public void fecharConta (int id) { 
 		PreparedStatement stmt =null; 
 		
-		String sql= "UPDATE usuario SET isAtivo='false' AND SET saldo=0" 
+		String sql= "UPDATE cliente SET isAtivo='false' AND SET saldo=0" 
 				+ "WHERE id=?"; 
 		
 		try { 
@@ -272,6 +272,44 @@ public class ClienteDAOImpl implements GenericDAO{
 		return lista; 
 	}
 
+public Object listarPorId(int id) {
+		
+		PreparedStatement stmt =null;  //Objeto criado,  usado quando precisamos executar comandos SQL pré-compilados e obter o resultado produzido.
+		Cliente cliente = null; //objeto produto
+		ResultSet rs =null; //objeto que representa um conjunto de dados recuperados de uma base de dados após a execução de uma consulta SQL. 
+		
+		
+		String sql = "SELECT id, nome, email, isativo FROM cliente WHERE id=" + "(?)"; //Var para armazenar o select que vais er executado no banco 
+		
+		try { 
+			stmt =conn.prepareStatement(sql); //converter string em sql 
+		stmt.setInt(1, id); // define o valor do primeiro parâmetro (índice 1) na consulta. O valor é o id fornecido.
+		stmt.executeQuery(); // executa a consulta preparada no banco de dados, mas o resultado da execução não está sendo armazenado.
+		rs = stmt.executeQuery(); //a consulta preparada é executada novamente e o resultado é armazenado em um objeto do tipo ResultSet chamado rs. O ResultSet contém os resultados da consulta realizada.
+		
+		if (rs.next()) { //resultado (ou seja, rs.next() retorna true):
+         cliente = new Cliente ();
+         cliente.setId(rs.getInt("id"));
+         cliente.setNome (rs.getString("nome")); 
+         cliente.setEmail (rs.getString("email")); //produto recebe valores das colunas “id” e “descricao” obtidos do ResultSet.
+         cliente.setIsAtivo (rs.getBoolean("isAtivo")); //produto recebe valores das colunas “id” e “descricao” obtidos do ResultSet.
+         JOptionPane.showMessageDialog(null, "Usuário localizado!");
+
+        }
+
+			} catch (SQLException ex) {
+			System.out.println("Problemas na DAO ao exibir usuário! Erro:" + ex.getMessage());
+			ex.printStackTrace();
+		} finally { 
+			try { 
+				ConnectionFactory.closeConnection(conn, stmt, rs); 
+			} catch (Exception ex) { 
+				System.out.println("Problemas ao fechar conexão! Erro:" + ex.getMessage());
+			}
+		}
+		
+		return cliente; 
+	}
 
 	}
 

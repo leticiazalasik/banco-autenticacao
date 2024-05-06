@@ -8,6 +8,6 @@ public interface GenericDAO {
 	public Object listarPorNome(String nome); 
 	public Boolean cadastrar (Object object); 
 	public Boolean alterar (Object object); 
-	public void excluir (String id); 
+	public void excluir (int id); 
 	
 }
