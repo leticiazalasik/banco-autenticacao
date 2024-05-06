@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import br.com.autenticacao.model.Usuario;
 import br.com.banco.model.Cliente;
 import br.com.banco.util.ConnectionFactory;
 
