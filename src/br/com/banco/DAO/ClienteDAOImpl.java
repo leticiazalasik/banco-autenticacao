@@ -99,20 +99,93 @@ public class ClienteDAOImpl implements GenericDAO{
 
 	@Override
 	public Boolean cadastrar(Object object) {
-		// TODO Auto-generated method stub
-		return null;
+		Cliente cliente = (Cliente) object; 
+		PreparedStatement stmt =null; 
+		String sql = "INSERT INTO cliente (nome, email,senha, isativo, saldo)"
+				+"VALUES (?,?,MD5(?),?,?)"; 
+		
+		try { 
+			stmt=conn.prepareStatement(sql); 
+			stmt.setString(1, cliente.getNome());
+			stmt.setString(2, cliente.getEmail());
+			stmt.setString(3, cliente.getSenha());
+			stmt.setBoolean(4, cliente.getIsAtivo());
+			stmt.setDouble(5, cliente.getSaldo());
+
+			stmt.execute();
+			return true;  
+		} catch (SQLException ex) { 
+			System.out.println("Problemas ao cadastrar cliente.");
+			ex.printStackTrace();
+			return false; 
+		} finally { 
+			try { 
+				ConnectionFactory.closeConnection(conn, stmt);
+			} catch (Exception ex) { 
+				System.out.println("Problemas ao fechar conexão.");
+				ex.printStackTrace();
+				
+			}
+		}
 	}
 
 	@Override
 	public Boolean alterar(Object object) {
-		// TODO Auto-generated method stub
-		return null;
+		Cliente cliente = (Cliente) object; 
+		PreparedStatement stmt = null; 
+		String sql = "UPDATE cliente SET nome=?, email=?, senha=?,istativo=?, saldo=? WHERE id=? "; 
+		
+		try { 
+			stmt=conn.prepareStatement(sql); 
+			stmt.setString(1, cliente.getNome());
+			stmt.setString(2, cliente.getEmail());
+			stmt.setString(3, cliente.getSenha());
+			stmt.setBoolean(4, cliente.getIsAtivo());
+			stmt.setDouble(5, cliente.getSaldo());
+
+			stmt.execute();
+			return true;  
+			
+		} catch (SQLException ex) { 
+			System.out.println("Problemas na DAO ao cadastrar cliente.");
+			ex.printStackTrace();
+			return false; 
+		} finally { 
+			try { 
+				ConnectionFactory.closeConnection(conn, stmt);
+			} catch (Exception ex) {
+				System.out.println("Problemas ao fechar conexão");
+				ex.printStackTrace();
+			}
+		}
 	}
 
 	@Override
-	public void excluir(int id) {
-		// TODO Auto-generated method stub
+	public void excluir (String nome) {
+		PreparedStatement stmt = null; 
+		String sql = "DELETE FROM cliente WHERE nome=?"; 
 		
+		try { 
+			stmt=conn.prepareStatement(sql);
+			stmt.setString(1, nome);
+			stmt.executeUpdate();
+		} catch (SQLException ex) { 
+			System.out.println("Problemas na DAO ao excluir cliente.");
+			ex.printStackTrace();
+		} finally { 
+			try { 
+				ConnectionFactory.closeConnection(conn, stmt);
+			} catch (Exception ex) { 
+				System.out.println("Problemas ao fechar conexão! Erro: " + ex.getMessage());
+				ex.printStackTrace();
+			}
+		}
+			}
+		
+	public Boolean realizar
+	
+	
+	
+	
 	}
 
-}
