@@ -1,5 +1,8 @@
 package br.com.bancomain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JOptionPane;
 
 import br.com.banco.controller.ClienteController;
@@ -36,21 +39,49 @@ public class Main {
 			case 1: 
 			//Cadastrar 
 				
-			novoCliente.set
+			novoCliente.setNome(JOptionPane.showInputDialog("Nome: "));
+			novoCliente.setEmail(JOptionPane.showInputDialog("Email: "));
+			novoCliente.setSenha(JOptionPane.showInputDialog("Senha: ")); 
+			novoCliente.setIsAtivo(Boolean.valueOf(JOptionPane.showInputDialog("Ativar cliente?(true/false)")));
+			novoCliente.setSaldo(Integer.valueOf(JOptionPane.showInputDialog("Saldo:"))); 
+			
+			controller.cadastrar(novoCliente);
+			break; 
+			
+			case 6: 
+			//Listar  todos
+			
+			Cliente cliente = new Cliente(); 
+			List<Cliente>lista = new ArrayList<Cliente>(); 
+			lista = controller.listarTodos(); 
+			
+			String mensagemLista = " "
+			.concat("-- Lista de todos os clientes --\n"); 
+			for (Cliente cliente2 :lista) { 
+				mensagemLista=mensagemLista
+				.concat("\n")
+				.concat(String.valueOf(cliente2.getId()))
+				.concat(" -")
+				.concat(cliente2.getNome())
+				.concat("\n Email: ")
+				.concat(String.valueOf(cliente2.getEmail()))
+				.concat("\n Cliente ativo? ")
+				.concat(String.valueOf("Ativo? "+ (cliente2.getIsAtivo())))
+				.concat("\n Saldo: R$ ")
+				.concat(String.valueOf(cliente2.getSaldo()));
 			}
+			JOptionPane.showMessageDialog(null, mensagemLista);
+			break; 
 			
+		case 3: 
+		//Listar por id 
 			
-			
-			
-		}
+		int opcaoId =Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
 		
 		
 		
 		
-		
-		
-		
-		
+	}	
 	}
-
-}
+	}
+	}
