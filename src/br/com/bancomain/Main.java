@@ -127,8 +127,23 @@ public class Main {
 			String inputSaldo = JOptionPane.showInputDialog("Digite o saldo: ");
 			Double saldo = Double.parseDouble(inputSaldo);
 			clienteAlterado.setSaldo(saldo);
+break; 
 
-			
+		case 5: 
+		//Autenticar/login 
+		novoCliente.setEmail(JOptionPane.showInputDialog("E-mail: ")); 
+		novoCliente.setSenha(JOptionPane.showInputDialog("Senha: ")); 
+		
+		controller.realizarLogin(novoCliente.getEmail(), novoCliente.getSenha()); 
+		break; 
+		
+		case 7: 
+		//Desativar Conta do cliente 
+		int idDesativar = Integer.parseInt(JOptionPane.showInputDialog("Digite o id do cliente a ser desativado: ")); 
+		
+		novoCliente.setId(idDesativar); 
+		controller.fecharConta(idDesativar); 
+		break; 
 	}
 	}
 	}
