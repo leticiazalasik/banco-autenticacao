@@ -78,10 +78,58 @@ public class Main {
 			
 		int opcaoId =Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
 		
+		Cliente clienteEncontrado = controller.listarPorId(opcaoId);
 		
+		if (clienteEncontrado!=null) { 
+			String mensagemLista2=" "
+					.concat("Id: ") 
+					.concat(String.valueOf(clienteEncontrado.getId())) //concat só recebe string entao preciso converter 
+					.concat("\n")
+					.concat("Nome: ")
+					.concat(clienteEncontrado.getNome())
+					.concat("\n")
+					.concat(String.valueOf("Ativo? "+ (clienteEncontrado.getIsAtivo()))); 
+			
+			JOptionPane.showMessageDialog(null, mensagemLista2);
+		} else {
+			JOptionPane.showMessageDialog(null, "Não existe produto com esse código na lista");
+		}
 		
+		break; 
 		
-	}	
+		case 4: 
+		//Excluir 
+		opcaoId = Integer.parseInt(JOptionPane.showInputDialog("Digite o id do cliente a ser excluído: "));
+		
+		if (controller.excluir(opcaoId)) { 
+		JOptionPane.showMessageDialog(null, "Usuário excluído com sucesso!");	
+		} else { 
+		controller.excluir(opcaoId);
+		JOptionPane.showMessageDialog(null, "Erro ao excluir produto!"); 
+		}
+		break; 
+		
+		case 2: 
+		//Editar 
+		
+			Cliente clienteAlterado = new Cliente(); 
+			
+			int idModificar = Integer.parseInt(JOptionPane.showInputDialog("Digite o id do cliente a ser alterado: "));
+			
+			clienteAlterado.setNome(JOptionPane.showInputDialog("Nome: ")); 
+			clienteAlterado.setEmail(JOptionPane.showInputDialog("Email: ")); 
+			clienteAlterado.setSenha(JOptionPane.showInputDialog("Senha: "));
+			
+			String inputAlterado = JOptionPane.showInputDialog("Ativo/inativo: ");
+			boolean isAtivoAlterado = "ativo".equalsIgnoreCase(inputAlterado);
+			clienteAlterado.setIsAtivo(isAtivoAlterado);
+			
+			String inputSaldo = JOptionPane.showInputDialog("Digite o saldo: ");
+			Double saldo = Double.parseDouble(inputSaldo);
+			clienteAlterado.setSaldo(saldo);
+
+			
 	}
 	}
 	}
+}
