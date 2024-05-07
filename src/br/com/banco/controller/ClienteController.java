@@ -115,6 +115,54 @@ public class ClienteController {
 			}
 		}
 
+	public void realizarLogin (String email, String senha) { 
+		try { 
+			ClienteDAOImpl dao = new ClienteDAOImpl(); 
+			
+			if (dao.realizarLogin(email, senha)) { 
+				JOptionPane.showMessageDialog(null, "Usuário logado!");
+			} else { 
+				JOptionPane.showMessageDialog(null, "Não foi possívelr realizar login");
+			}
+		 } catch (Exception e) {
+		        System.out.println("Erro na controller ao autenticar Usuário.");
+		        e.printStackTrace();
+		    }
+	}
+	
+	public Boolean fecharConta (int id) { 
+		try { 
+			ClienteDAOImpl dao = new ClienteDAOImpl(); 
+			
+			dao.fecharConta(id);
+			return true; 
+			
+		} catch (Exception e) {  //Se der erro faz isso 
+			System.out.println("Erro ao controller ao desativar produto.");
+			e.printStackTrace();
+			return false; 
+	}
+		}
+	
+	public List<Cliente>listarAtivos() {
+		List<Cliente>listaClientes=new ArrayList<Cliente>();
+		
+		try { 
+			ClienteDAOImpl dao = new ClienteDAOImpl();
+			
+			for(Object object : dao.listarAtivos()) { 
+				listaClientes.add((Cliente)object); 
+			}
+		} catch (Exception e) {  //Se der erro faz isso 
+			System.out.println("Erro na controller ao listar Usuário.");
+			e.printStackTrace();
+		}
+		
+		return listaClientes; 
+	}
+	
+	
+	
 	
 	
 }
