@@ -133,7 +133,7 @@ public class ClienteDAOImpl implements GenericDAO{
 	public Boolean alterar(Object object) {
 		Cliente cliente = (Cliente) object; 
 		PreparedStatement stmt = null; 
-		String sql = "UPDATE cliente SET nome=?, email=?, senha=?,istativo=?, saldo=? WHERE id=? "; 
+		String sql = "UPDATE cliente SET nome=?, email=?, senha=?,isativo=?, saldo=? WHERE id=? "; 
 		
 		try { 
 			stmt=conn.prepareStatement(sql); 
@@ -142,6 +142,7 @@ public class ClienteDAOImpl implements GenericDAO{
 			stmt.setString(3, cliente.getSenha());
 			stmt.setBoolean(4, cliente.getIsAtivo());
 			stmt.setDouble(5, cliente.getSaldo());
+			stmt.setInt(6, cliente.getId());
 
 			stmt.execute();
 			return true;  

@@ -34,6 +34,8 @@ public class Main {
 		
 		while (opcaoMenu!=0) {
 			
+			int opcaoId;
+			Cliente clienteEncontrado;
 			switch (opcaoMenu) { 
 			
 			case 1: 
@@ -51,10 +53,14 @@ public class Main {
 			case 2: 
 				//Editar 
 				
+				opcaoId =Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
+				
+				clienteEncontrado = controller.listarPorId(opcaoId);
+				
+				if (clienteEncontrado!=null) { 
 					Cliente clienteAlterado = new Cliente(); 
 					
-					int idModificar = Integer.parseInt(JOptionPane.showInputDialog("Digite o id do cliente a ser alterado: "));
-					
+					clienteAlterado.setId(clienteEncontrado.getId());
 					clienteAlterado.setNome(JOptionPane.showInputDialog("Nome: ")); 
 					clienteAlterado.setEmail(JOptionPane.showInputDialog("Email: ")); 
 					clienteAlterado.setSenha(JOptionPane.showInputDialog("Senha: "));
@@ -66,7 +72,41 @@ public class Main {
 					String inputSaldo = JOptionPane.showInputDialog("Digite o saldo: ");
 					Double saldo = Double.parseDouble(inputSaldo);
 					clienteAlterado.setSaldo(saldo);
-		break; 
+					
+					controller.alterar(clienteAlterado);
+				} 
+				break;
+		
+			case 3: 
+				//Desativar Conta do cliente 
+				int idDesativar = Integer.parseInt(JOptionPane.showInputDialog("Digite o id do cliente a ser desativado: ")); 
+				
+				novoCliente.setId(idDesativar); 
+				controller.fecharConta(idDesativar); 
+				break; 
+				
+				
+				case 4: 
+				//Excluir 
+				opcaoId = Integer.parseInt(JOptionPane.showInputDialog("Digite o id do cliente a ser excluído: "));
+				
+				if (controller.excluir(opcaoId)) { 
+				JOptionPane.showMessageDialog(null, "Usuário excluído com sucesso!");	
+				} else { 
+				controller.excluir(opcaoId);
+				JOptionPane.showMessageDialog(null, "Erro ao excluir produto!"); 
+				}
+				break; 
+				
+				
+				case 5: 
+				//Autenticar/login 
+				novoCliente.setEmail(JOptionPane.showInputDialog("E-mail: ")); 
+				novoCliente.setSenha(JOptionPane.showInputDialog("Senha: ")); 
+				
+				controller.realizarLogin(novoCliente.getEmail(), novoCliente.getSenha()); 
+				break; 
+				
 
 			case 6: 
 			//Listar  todos
@@ -93,58 +133,30 @@ public class Main {
 			JOptionPane.showMessageDialog(null, mensagemLista);
 			break; 
 			
-		case 3: 
-		//Listar por id 
-			
-		int opcaoId =Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
-		
-		Cliente clienteEncontrado = controller.listarPorId(opcaoId);
-		
-		if (clienteEncontrado!=null) { 
-			String mensagemLista2=" "
-					.concat("Id: ") 
-					.concat(String.valueOf(clienteEncontrado.getId())) //concat só recebe string entao preciso converter 
-					.concat("\n")
-					.concat("Nome: ")
-					.concat(clienteEncontrado.getNome())
-					.concat("\n")
-					.concat(String.valueOf("Ativo? "+ (clienteEncontrado.getIsAtivo()))); 
-			
-			JOptionPane.showMessageDialog(null, mensagemLista2);
-		} else {
-			JOptionPane.showMessageDialog(null, "Não existe produto com esse código na lista");
-		}
-		
-		break; 
-		
-		case 4: 
-		//Excluir 
-		opcaoId = Integer.parseInt(JOptionPane.showInputDialog("Digite o id do cliente a ser excluído: "));
-		
-		if (controller.excluir(opcaoId)) { 
-		JOptionPane.showMessageDialog(null, "Usuário excluído com sucesso!");	
-		} else { 
-		controller.excluir(opcaoId);
-		JOptionPane.showMessageDialog(null, "Erro ao excluir produto!"); 
-		}
-		break; 
-		
-		
-		case 5: 
-		//Autenticar/login 
-		novoCliente.setEmail(JOptionPane.showInputDialog("E-mail: ")); 
-		novoCliente.setSenha(JOptionPane.showInputDialog("Senha: ")); 
-		
-		controller.realizarLogin(novoCliente.getEmail(), novoCliente.getSenha()); 
-		break; 
 		
 		case 7: 
-		//Desativar Conta do cliente 
-		int idDesativar = Integer.parseInt(JOptionPane.showInputDialog("Digite o id do cliente a ser desativado: ")); 
+			//listar ativos
+			lista=controller.listarAtivos(); 
+			
+			String mensagemListaAtivos=" "
+					.concat("- Clientes ATIVOS no sistema: - ")
+					.concat("\n");
+			for  (Cliente cliente1:lista) {
+				mensagemListaAtivos=mensagemListaAtivos
+						.concat("\n")
+						.concat(String.valueOf(cliente1.getId()))
+						.concat("-")
+						.concat(cliente1.getNome())
+						.concat(String.valueOf(cliente1.getEmail()))
+						.concat("\n")
+						.concat(String.valueOf("Ativo? "+ (cliente1.getIsAtivo())))
+						.concat("\n")
+						.concat(String.valueOf(cliente1.getSaldo()))
+						.concat("\n");
+			}
+			JOptionPane.showMessageDialog(null, mensagemListaAtivos); 
+			break; 
 		
-		novoCliente.setId(idDesativar); 
-		controller.fecharConta(idDesativar); 
-		break; 
 		
 		case 8: 
 		//Listar por nome 
@@ -172,27 +184,30 @@ public class Main {
 			break; 
 			
 		case 9: 
-		//listar ativos
-		lista=controller.listarAtivos(); 
+			//Listar por id 
+			
+			opcaoId =Integer.parseInt(JOptionPane.showInputDialog("Digite o id: "));
+			
+			clienteEncontrado = controller.listarPorId(opcaoId);
+			
+			if (clienteEncontrado!=null) { 
+				String mensagemLista2=" "
+						.concat("Id: ") 
+						.concat(String.valueOf(clienteEncontrado.getId())) //concat só recebe string entao preciso converter 
+						.concat("\n")
+						.concat("Nome: ")
+						.concat(clienteEncontrado.getNome())
+						.concat("\n")
+						.concat(String.valueOf("Ativo? "+ (clienteEncontrado.getIsAtivo()))); 
+				
+				JOptionPane.showMessageDialog(null, mensagemLista2);
+			} else {
+				JOptionPane.showMessageDialog(null, "Não existe produto com esse código na lista");
+			}
+			
+			break; 
+
 		
-		String mensagemListaAtivos=" "
-				.concat("- Clientes ATIVOS no sistema: - ")
-				.concat("\n");
-		for  (Cliente cliente1:lista) {
-			mensagemListaAtivos=mensagemListaAtivos
-					.concat("\n")
-					.concat(String.valueOf(cliente1.getId()))
-					.concat("-")
-					.concat(cliente1.getNome())
-					.concat(String.valueOf(cliente1.getEmail()))
-					.concat("\n")
-					.concat(String.valueOf("Ativo? "+ (cliente1.getIsAtivo())))
-					.concat("\n")
-					.concat(String.valueOf(cliente1.getSaldo()))
-					.concat("\n");
-		}
-		JOptionPane.showMessageDialog(null, mensagemListaAtivos); 
-		break; 
 			
 		case 10: 
 		JOptionPane.showMessageDialog(null, "Fechando o sistema...Sistema finalizado!");

@@ -103,11 +103,17 @@ public class ClienteController {
 		try { 
 			GenericDAO dao = new ClienteDAOImpl();
 			
-			if (dao.alterar(cliente.getId())==false) { 
+			if (validarId(cliente.getId())==false) { 
 				JOptionPane.showMessageDialog(null, "Nenhum usuário encontrado com este id");
-			} else { 
-				JOptionPane.showMessageDialog(null, "Erro ao alterar usuário.");
 			}
+			
+				if (dao.alterar(cliente)) { 
+					JOptionPane.showMessageDialog(null, "Cliente alterado com sucesso.");
+				} else { 
+					JOptionPane.showMessageDialog(null, "Erro ao alterar usuário.");
+
+				}
+		
 			} catch (Exception e) {  //Se der erro faz isso 
 				System.out.println("Erro ao controller ao Excluir usuario Usuário.");
 				e.printStackTrace();
