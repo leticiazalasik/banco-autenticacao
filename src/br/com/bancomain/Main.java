@@ -22,7 +22,7 @@ public class Main {
 				.concat("6) Listar todos os clientes\n")
 				.concat("7) Listar clientes ativos\n")
 				.concat("8) Buscar cliente por nome\n")
-				.concat("Buscar cliente por código id\n")
+				.concat("9) Buscar cliente por código id\n")
 				.concat("10) Finalizar o sistema\n")
 				.concat("Digite a opção desejada: \n");
 
@@ -48,6 +48,26 @@ public class Main {
 			controller.cadastrar(novoCliente);
 			break; 
 			
+			case 2: 
+				//Editar 
+				
+					Cliente clienteAlterado = new Cliente(); 
+					
+					int idModificar = Integer.parseInt(JOptionPane.showInputDialog("Digite o id do cliente a ser alterado: "));
+					
+					clienteAlterado.setNome(JOptionPane.showInputDialog("Nome: ")); 
+					clienteAlterado.setEmail(JOptionPane.showInputDialog("Email: ")); 
+					clienteAlterado.setSenha(JOptionPane.showInputDialog("Senha: "));
+					
+					String inputAlterado = JOptionPane.showInputDialog("Ativo/inativo: ");
+					boolean isAtivoAlterado = "ativo".equalsIgnoreCase(inputAlterado);
+					clienteAlterado.setIsAtivo(isAtivoAlterado);
+					
+					String inputSaldo = JOptionPane.showInputDialog("Digite o saldo: ");
+					Double saldo = Double.parseDouble(inputSaldo);
+					clienteAlterado.setSaldo(saldo);
+		break; 
+
 			case 6: 
 			//Listar  todos
 			
@@ -109,26 +129,7 @@ public class Main {
 		}
 		break; 
 		
-		case 2: 
-		//Editar 
 		
-			Cliente clienteAlterado = new Cliente(); 
-			
-			int idModificar = Integer.parseInt(JOptionPane.showInputDialog("Digite o id do cliente a ser alterado: "));
-			
-			clienteAlterado.setNome(JOptionPane.showInputDialog("Nome: ")); 
-			clienteAlterado.setEmail(JOptionPane.showInputDialog("Email: ")); 
-			clienteAlterado.setSenha(JOptionPane.showInputDialog("Senha: "));
-			
-			String inputAlterado = JOptionPane.showInputDialog("Ativo/inativo: ");
-			boolean isAtivoAlterado = "ativo".equalsIgnoreCase(inputAlterado);
-			clienteAlterado.setIsAtivo(isAtivoAlterado);
-			
-			String inputSaldo = JOptionPane.showInputDialog("Digite o saldo: ");
-			Double saldo = Double.parseDouble(inputSaldo);
-			clienteAlterado.setSaldo(saldo);
-break; 
-
 		case 5: 
 		//Autenticar/login 
 		novoCliente.setEmail(JOptionPane.showInputDialog("E-mail: ")); 
@@ -144,7 +145,71 @@ break;
 		novoCliente.setId(idDesativar); 
 		controller.fecharConta(idDesativar); 
 		break; 
+		
+		case 8: 
+		//Listar por nome 
+			String nomeBuscar = (JOptionPane.showInputDialog("Digite o id: "));
+			
+			clienteEncontrado = controller.listarPorNome(nomeBuscar);
+			
+			if (clienteEncontrado!=null) { 
+				String mensagemLista2=" "
+						.concat("Id: ") 
+						.concat(String.valueOf(clienteEncontrado.getId())) //concat só recebe string entao preciso converter 
+						.concat("\n")
+						.concat("Nome: ")
+						.concat(clienteEncontrado.getNome())
+						.concat("\n")
+						.concat(String.valueOf("Ativo? "+ (clienteEncontrado.getIsAtivo())))
+						.concat(String.valueOf("Saldo: "+ (clienteEncontrado.getSaldo()))); 
+
+				
+				JOptionPane.showMessageDialog(null, mensagemLista2);
+			} else {
+				JOptionPane.showMessageDialog(null, "Não existe produto com esse código na lista");
+			}
+			
+			break; 
+			
+		case 9: 
+		//listar ativos
+		lista=controller.listarAtivos(); 
+		
+		String mensagemListaAtivos=" "
+				.concat("- Clientes ATIVOS no sistema: - ")
+				.concat("\n");
+		for  (Cliente cliente1:lista) {
+			mensagemListaAtivos=mensagemListaAtivos
+					.concat("\n")
+					.concat(String.valueOf(cliente1.getId()))
+					.concat("-")
+					.concat(cliente1.getNome())
+					.concat(String.valueOf(cliente1.getEmail()))
+					.concat("\n")
+					.concat(String.valueOf("Ativo? "+ (cliente1.getIsAtivo())))
+					.concat("\n")
+					.concat(String.valueOf(cliente1.getSaldo()))
+					.concat("\n");
+		}
+		JOptionPane.showMessageDialog(null, mensagemListaAtivos); 
+		break; 
+			
+		case 10: 
+		JOptionPane.showMessageDialog(null, "Fechando o sistema...Sistema finalizado!");
+		break; 
+		
+		default: 
+			JOptionPane.showMessageDialog(null, "Opção digitada inexistente.\n Tente novamente!"); 
+		break; 	
 	}
+			if (opcaoMenu!=10) { 
+				opcao = JOptionPane.showInputDialog(menu);
+				opcaoMenu = Integer.parseInt(opcao); 
+				
+			} else { 
+				break; 
+			}
 	}
+		
 	}
 }
