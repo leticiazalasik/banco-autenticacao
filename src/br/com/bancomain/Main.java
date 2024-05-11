@@ -63,18 +63,27 @@ public class Main {
 					Cliente clienteAlterado = new Cliente(); 
 					
 					clienteAlterado.setId(clienteEncontrado.getId());
-					clienteAlterado.setNome(JOptionPane.showInputDialog("Nome: ")); 
-					clienteAlterado.setEmail(JOptionPane.showInputDialog("Email: ")); 
-					clienteAlterado.setSenha(JOptionPane.showInputDialog("Senha: "));
 					
-					String inputAlterado = JOptionPane.showInputDialog("Ativo/inativo: ");
-					boolean isAtivoAlterado = "true".equalsIgnoreCase(inputAlterado);
-					clienteAlterado.setIsAtivo(isAtivoAlterado);
-					
-					String inputSaldo = JOptionPane.showInputDialog("Digite o saldo: ");
-					Double saldo = Double.parseDouble(inputSaldo);
-					clienteAlterado.setSaldo(saldo);
-					
+					String nomeInicial = clienteEncontrado.getNome();
+					String input = (String) JOptionPane.showInputDialog(null, "Digite o nome:", "Alterção de nome", JOptionPane.QUESTION_MESSAGE, null, null, nomeInicial);
+					clienteAlterado.setNome(input);
+
+					String emailInicial = clienteEncontrado.getEmail();
+					String input1 = (String) JOptionPane.showInputDialog(null, "Digite o e-mail:", "Alteração de e-mail", JOptionPane.QUESTION_MESSAGE, null, null, emailInicial);
+					clienteAlterado.setEmail(input1);
+
+					clienteAlterado.setSenha(JOptionPane.showInputDialog(null, "Digite a senha:"));
+
+					boolean isAtivoInicial = clienteEncontrado.getIsAtivo();// valor pré-existente
+					String input3 = (String) JOptionPane.showInputDialog(null, "Digite o novo status (true para ativo, false para inativo)", "Atualização de Status da conta", JOptionPane.QUESTION_MESSAGE, null, null, isAtivoInicial);
+					boolean inputboolean = Boolean.parseBoolean(input3);
+					clienteAlterado.setIsAtivo(inputboolean);
+
+					double saldoInicial = clienteEncontrado.getSaldo(); // valor pré-existente
+					String input4 = (String) JOptionPane.showInputDialog(null, "Digite o novo saldo", "Atualização de Saldo", JOptionPane.QUESTION_MESSAGE, null, null, saldoInicial);
+					Double inputDouble = Double.parseDouble(input4);
+					clienteAlterado.setSaldo(inputDouble); 
+
 					controller.alterar(clienteAlterado);
 				} 
 				break;
@@ -163,7 +172,7 @@ public class Main {
 		
 		case 8: 
 		//Listar por nome 
-			String nomeBuscar = (JOptionPane.showInputDialog("Digite o id: "));
+			String nomeBuscar = (JOptionPane.showInputDialog("Digite o nome: "));
 			
 			clienteEncontrado = controller.listarPorNome(nomeBuscar);
 			

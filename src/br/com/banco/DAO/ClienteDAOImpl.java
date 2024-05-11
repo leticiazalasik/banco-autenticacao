@@ -67,7 +67,7 @@ public class ClienteDAOImpl implements GenericDAO {
 		Cliente cliente = null;
 		ResultSet rs = null;
 
-		String sql = "SELCT id,nome,email,isAtivo, saldo FROM cliente WHERE nome=?";
+		String sql = "SELECT id,nome,email,isAtivo, saldo FROM cliente WHERE nome=?";
 		try {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, nome);
@@ -80,7 +80,7 @@ public class ClienteDAOImpl implements GenericDAO {
 				cliente = new Cliente();
 				cliente.setNome(rs.getString("nome"));
 				cliente.setId(rs.getInt("id"));
-				cliente.setEmail(rs.getNString("email"));
+				cliente.setEmail(rs.getString("email"));
 				cliente.setIsAtivo(rs.getBoolean("isAtivo"));
 				cliente.setSaldo(rs.getDouble("saldo"));
 			}
