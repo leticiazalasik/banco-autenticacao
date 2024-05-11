@@ -40,7 +40,7 @@ public class ClienteDAOImpl implements GenericDAO {
 				Cliente cliente = new Cliente();
 				cliente.setNome(rs.getString("nome"));
 				cliente.setId(rs.getInt("id"));
-				cliente.setEmail(rs.getNString("email"));
+				cliente.setEmail(rs.getString("email"));
 				cliente.setIsAtivo(rs.getBoolean("isAtivo"));
 				cliente.setSaldo(rs.getDouble("saldo"));
 
@@ -185,7 +185,7 @@ public class ClienteDAOImpl implements GenericDAO {
 	public Boolean realizarLogin(String email, String senha) {
 		ResultSet rs = null;
 		PreparedStatement stmt = null;
-		String sql = "SELECT id, nome FROM cliente WHERE " + "email=?" + "AND senha =MD5(?)";
+		String sql = "SELECT id, nome FROM cliente WHERE email=? AND senha =MD5(?)";
 		try {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, email);
@@ -278,16 +278,7 @@ public class ClienteDAOImpl implements GenericDAO {
 		ResultSet rs = null; // Objeto criado
 
 		String sql = "SELECT id, nome, email, isAtivo, saldo FROM cliente WHERE isAtivo=true ORDER BY nome"; // Var para
-																												// armazenar
-																												// o
-																												// select
-																												// que
-																												// vais
-																												// er
-																												// executado
-																												// no
-																												// banco
-
+																								// banc
 		try {
 			stmt = conn.prepareStatement(sql); // aqui o objetivo é transformar o sql em algo que relamwente vai ser
 												// lido pelo banco, uma sql executável, é isso que o prepareStatemet faz

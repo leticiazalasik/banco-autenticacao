@@ -58,6 +58,7 @@ public class Main {
 				
 				clienteEncontrado = controller.listarPorId(opcaoId);
 				
+				
 				if (clienteEncontrado!=null) { 
 					Cliente clienteAlterado = new Cliente(); 
 					
@@ -127,7 +128,7 @@ public class Main {
 				.concat("\n Email: ")
 				.concat(String.valueOf(cliente2.getEmail()))
 				.concat("\n Cliente ativo? ")
-				.concat(String.valueOf("Ativo? "+ (cliente2.getIsAtivo())))
+				.concat(String.valueOf(cliente2.getIsAtivo()))
 				.concat("\n Saldo: R$ ")
 				.concat(String.valueOf(cliente2.getSaldo()));
 			}
@@ -146,8 +147,9 @@ public class Main {
 				mensagemListaAtivos=mensagemListaAtivos
 						.concat("\n")
 						.concat(String.valueOf(cliente1.getId()))
-						.concat("-")
+						.concat("- ")
 						.concat(cliente1.getNome())
+						.concat("\n")
 						.concat(String.valueOf(cliente1.getEmail()))
 						.concat("\n")
 						.concat(String.valueOf("Ativo? "+ (cliente1.getIsAtivo())))
