@@ -10,7 +10,7 @@ import br.com.banco.model.Cliente;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
 		String menu=" "
 				.concat(" Banco X - MENU: \n")
@@ -21,6 +21,7 @@ public class Main {
 				.concat("5) Fazer login do cliente\n")
 				.concat("6) Listar todos os clientes\n")
 				.concat("7) Listar clientes ativos\n")
+				
 				.concat("8) Buscar cliente por nome\n")
 				.concat("9) Buscar cliente por código id\n")
 				.concat("10) Finalizar o sistema\n")
@@ -66,7 +67,7 @@ public class Main {
 					clienteAlterado.setSenha(JOptionPane.showInputDialog("Senha: "));
 					
 					String inputAlterado = JOptionPane.showInputDialog("Ativo/inativo: ");
-					boolean isAtivoAlterado = "ativo".equalsIgnoreCase(inputAlterado);
+					boolean isAtivoAlterado = "true".equalsIgnoreCase(inputAlterado);
 					clienteAlterado.setIsAtivo(isAtivoAlterado);
 					
 					String inputSaldo = JOptionPane.showInputDialog("Digite o saldo: ");
